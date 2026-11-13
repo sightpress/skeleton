@@ -80,6 +80,15 @@ docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$PWD/..:/workspace" 
 
 The parent folder is mounted so that the sibling repos are visible inside the container.
 
+### Continuous integration
+
+Every pull request and every push to `main` runs the `CI` workflow (`composer check`), with `core` and
+`module-interface` checked out next to this repo: `composer validate`, code style, PHPStan, the unit suite with the
+100% coverage gate, the integration suite and `composer audit`. The coverage report is uploaded as an artifact.
+
+Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/); release-please uses them to
+keep a release pull request and `CHANGELOG.md` up to date.
+
 ## Licence
 
 GNU General Public License v3.0 or later. See [LICENSE](LICENSE).
