@@ -28,3 +28,6 @@ junit.xml
 Thumbs.db
 .idea/
 .vscode/
+
+# Runtime data (SQLite registry, uploads written by the app)
+/var/data/

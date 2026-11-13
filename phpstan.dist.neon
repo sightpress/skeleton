@@ -2,6 +2,9 @@ parameters:
     level: max
     paths:
         - src
+        - public/index.php
+        - bin/sightpress
+        - config
         - tests
         - tools
         - .php-cs-fixer.dist.php

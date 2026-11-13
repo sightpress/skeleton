@@ -6,8 +6,8 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-    ->in([__DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/tools'])
-    ->append([__FILE__, __DIR__ . '/rector.php']);
+    ->in([__DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/tools', __DIR__ . '/config', __DIR__ . '/public'])
+    ->append([__FILE__, __DIR__ . '/rector.php', __DIR__ . '/bin/sightpress']);
 
 return new Config()
     ->setRiskyAllowed(true)
