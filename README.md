@@ -10,7 +10,43 @@ This project holds your configuration and the files that start the app. All feat
 
 - PHP 8.5 or later
 - Composer
-- Docker (for the local environment, coming soon)
+- Docker with Docker Compose (for the local environment)
+
+## Local environment
+
+Clone `core` and `module-interface` next to this repo (the PHP container and Composer find them at `../core` and
+`../module-interface`), then:
+
+```sh
+cp .env.example .env   # optional: every setting has a default
+docker compose up
+```
+
+Open <http://localhost:8080>. Until a site exists, every address shows the "No site configured" page (HTTP 404).
+The first start builds the PHP image and runs `composer install` if `vendor/` is missing.
+
+What runs:
+
+- `nginx` on <http://localhost:8080> and `php` (PHP-FPM 8.5 with PCOV and Composer)
+- `mailpit`, which catches every e-mail: <http://localhost:8025>
+- `minio`, S3-compatible file storage: console on <http://localhost:9001> (user and password in `.env`)
+
+No database runs by default; SightPress uses SQLite. To start a database server, add a profile:
+
+```sh
+docker compose --profile mysql up      # or: mariadb, postgres
+```
+
+Database containers are only reachable from the other containers, by service name (`mysql`, `mariadb`, `postgres`).
+All ports listen on 127.0.0.1 only; change them in `.env` if they are taken.
+
+Shortcuts (`make help` lists them):
+
+- `make up` (add `PROFILE=mysql`, `mariadb` or `postgres`) and `make down`; or `composer up` and `composer down`
+- `make check`: `composer check` inside the PHP container
+- `make site-create NAME=demo` or `composer site:create demo`: create a site (not available yet)
+
+The command line tool is `bin/sightpress` (`bin/sightpress list` shows its commands).
 
 ## Development
 
@@ -32,9 +68,9 @@ Composer commands:
   is written to `build/coverage/html/`.
 - `composer fix`: applies Rector refactorings, then fixes the code style.
 
-Coverage needs the PCOV extension, or Xdebug in coverage mode. If your PHP has neither, use the
-development image from `core` (`../core/docker/dev-php/`), which has PHP 8.5, PCOV, SQLite and Composer.
-Run it from this folder:
+Coverage needs the PCOV extension, or Xdebug in coverage mode. If your PHP has neither, run the checks in the PHP
+container with `make check`, or use the development image from `core` (`../core/docker/dev-php/`), which has
+PHP 8.5, PCOV, SQLite and Composer. Run it from this folder:
 
 ```sh
 docker build -t sightpress/dev-php:8.5 ../core/docker/dev-php
