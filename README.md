@@ -89,6 +89,9 @@ Every pull request and every push to `main` runs the `CI` workflow (`composer ch
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/); release-please uses them to
 keep a release pull request and `CHANGELOG.md` up to date.
 
+`main` is protected by the ruleset in `.github/rulesets/main.json`. Changes reach it only through a pull request that
+passes the `composer check` check and has one approval. Pull requests are squash-merged. Admins can bypass the ruleset.
+
 ## Licence
 
 GNU General Public License v3.0 or later. See [LICENSE](LICENSE).
