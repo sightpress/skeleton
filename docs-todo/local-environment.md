@@ -31,9 +31,10 @@ Other addresses: Mailpit http://localhost:8025, MinIO console http://localhost:9
 
 ## Settings
 
-All in `.env` (copy `.env.example`; every value has a safe default): `APP_ENV`, `SIGHTPRESS_REGISTRY_DATABASE_URL`,
-`MAILER_DSN`, `S3_*`, `MINIO_ROOT_USER`/`MINIO_ROOT_PASSWORD`, `DB_*` (database profiles), the `*_PORT` values and
-`UID`/`GID` (the user the PHP container runs as). `config/tenant.php` is a stub that core will read later.
+All in `.env` (copy `.env.example`; every value has a safe default): `APP_ENV`, `MAILER_DSN`, `S3_*`,
+`MINIO_ROOT_USER`/`MINIO_ROOT_PASSWORD`, `DB_*` (database profiles), the `*_PORT` values and `UID`/`GID` (the user
+the PHP container runs as). `config/tenant.php` is a stub that core will read later. The list of sites lives in
+`config/sites.php`, which `bin/sightpress site:*` commands will write; no database is needed for it.
 
 Database containers are only reachable from the other containers, by service name (`mysql`, `mariadb`,
 `postgres`).

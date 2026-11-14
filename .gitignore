@@ -29,5 +29,7 @@ Thumbs.db
 .idea/
 .vscode/
 
-# Runtime data (SQLite registry, uploads written by the app)
+# Runtime data (SQLite site databases, uploads written by the app)
+# The site registry (config/sites.php) is written by site:* commands; site DSNs in it are encrypted.
+/config/sites.php.bak
 /var/data/
