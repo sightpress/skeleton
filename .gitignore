@@ -18,6 +18,7 @@ junit.xml
 .phpunit.result.cache
 .php-cs-fixer.cache
 /var/cache/
+/var/log/
 /.rector-cache/
 
 # Private planning (never committed)

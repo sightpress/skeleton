@@ -42,13 +42,12 @@ Database containers are only reachable from the other containers, by service nam
 ## Accessibility
 
 The "No site configured" page has `lang="en-GB"`, a unique title, one `main` landmark, one `h1` and a plain
-message. It follows the system light or dark colour scheme and has no other content. Any environment other than
+message. Core renders it (see core's kernel and error pages). It follows the system light or dark colour scheme and has no other content. Any environment other than
 `production` sends `X-Robots-Tag: noindex, nofollow`.
 
 ## Code and tests
 
-- `public/index.php`, `src/Http/NoSiteConfiguredPage.php`, `tests/Unit/Http/NoSiteConfiguredPageTest.php`,
-  `tests/Integration/FrontControllerTest.php`
+- `public/index.php` (boots core's kernel, which renders the error pages), `tests/Integration/FrontControllerTest.php`
 - `bin/sightpress`, `src/Console/Application.php`, `tests/Unit/Console/ApplicationTest.php`,
   `tests/Integration/CommandLineTest.php`
 - `docker-compose.yml`, `docker/php/Dockerfile`, `docker/nginx/default.conf`, `Makefile`, `.env.example`
