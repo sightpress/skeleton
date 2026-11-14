@@ -3,8 +3,9 @@
 #   docker compose up                      app on http://localhost:8080, plus Mailpit and MinIO
 #   docker compose --profile mysql up      also start MySQL   (or: mariadb, postgres)
 #
-# A plain `docker compose up` starts no database: the site registry uses SQLite by default, and sites can use
-# SQLite or an external database server. Settings come from `.env` (copy `.env.example`); every one has a default.
+# A plain `docker compose up` starts no database: the site registry is a config file (config/sites.php), and
+# sites can use SQLite or an external database server. Settings come from `.env` (copy `.env.example`); every
+# one has a default.
 
 x-env-file: &env-file
   env_file:
