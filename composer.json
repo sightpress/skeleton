@@ -93,6 +93,6 @@
     "fix": "Apply Rector refactorings, then fix the code style.",
     "up": "Start the local environment (http://localhost:8080) in the background.",
     "down": "Stop the local environment.",
-    "site:create": "Create a site, for example `composer site:create demo` (not available yet)."
+    "site:create": "Create a site, for example `composer site:create demo` (asks for the rest)."
   }
 }

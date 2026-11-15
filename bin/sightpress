@@ -3,13 +3,16 @@
 
 declare(strict_types=1);
 
-use App\Console\Application;
+use SightPress\Core\Kernel;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-date_default_timezone_set('UTC');
+// The console of SightPress: every module's commands (`bin/sightpress list` shows them).
+try {
+    $console = Kernel::boot(dirname(__DIR__))->console();
+} catch (Throwable $exception) {
+    fwrite(STDERR, sprintf("SightPress could not start: %s\n", $exception->getMessage()));
+    exit(1);
+}
 
-$argv = $_SERVER['argv'] ?? [];
-$arguments = is_array($argv) ? array_values(array_filter(array_slice($argv, 1), is_string(...))) : [];
-
-exit(new Application(STDOUT, STDERR)->run($arguments));
+exit($console->run());

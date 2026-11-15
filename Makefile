@@ -18,5 +18,5 @@ logs: ## Follow the logs
 check: ## Run every check (code style, static analysis, tests, coverage) in the PHP container
 	docker compose run --rm --no-deps php composer check
 
-site-create: ## Create a site: make site-create NAME=demo (not available yet)
+site-create: ## Create a site: make site-create NAME=demo (asks for the rest)
 	docker compose run --rm --no-deps php bin/sightpress site:create $(NAME)

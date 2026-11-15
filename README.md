@@ -44,9 +44,22 @@ Shortcuts (`make help` lists them):
 
 - `make up` (add `PROFILE=mysql`, `mariadb` or `postgres`) and `make down`; or `composer up` and `composer down`
 - `make check`: `composer check` inside the PHP container
-- `make site-create NAME=demo` or `composer site:create demo`: create a site (not available yet)
+- `make site-create NAME=demo` or `composer site:create demo`: create a site (asks for the rest)
 
 The command line tool is `bin/sightpress` (`bin/sightpress list` shows its commands).
+
+### Your first site
+
+1. Set `APP_SECRET` in `.env` (the file explains how to make one) and keep a copy of it somewhere safe.
+2. Run `make site-create NAME=demo` and answer the questions. In development use the domain `localhost`, a database
+   such as `sqlite:////app/sites/demo.sqlite`, and add `--url=http://localhost:8080` so the printed link works:
+
+   ```sh
+   docker compose run --rm --no-deps php bin/sightpress site:create demo --domain=localhost \
+     --db=sqlite:////app/sites/demo.sqlite --url=http://localhost:8080
+   ```
+
+3. Open the link it prints to choose the first admin's password, then sign in at http://localhost:8080/login.
 
 ## Development
 
