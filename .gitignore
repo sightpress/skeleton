@@ -38,3 +38,5 @@ Thumbs.db
 /var/sessions/
 /sites/*.sqlite
 /sites/*.sqlite-*
+# Each site's files (media, avatars, branding) in a folder named after the site id
+/sites/*/

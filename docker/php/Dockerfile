@@ -1,13 +1,16 @@
 # PHP-FPM image for a SightPress project.
 #
 #   base: PHP 8.5 FPM with the extensions SightPress needs (intl for dates and numbers in the visitor's language,
-#         PDO for SQLite, MySQL/MariaDB and PostgreSQL).
+#         PDO for SQLite, MySQL/MariaDB and PostgreSQL, gd with JPEG/PNG/WebP/FreeType and exif for uploaded
+#         pictures).
 #   dev:  base + PCOV for code coverage + Composer. docker-compose.yml uses this target.
 FROM php:8.5-fpm AS base
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libicu-dev libpq-dev libsqlite3-dev \
-    && docker-php-ext-install -j"$(nproc)" intl pdo_mysql pdo_pgsql \
+        libfreetype-dev libjpeg62-turbo-dev libpng-dev libwebp-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j"$(nproc)" intl pdo_mysql pdo_pgsql gd exif \
     && rm -rf /var/lib/apt/lists/*
 
 RUN { \
