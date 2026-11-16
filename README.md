@@ -60,6 +60,10 @@ The command line tool is `bin/sightpress` (`bin/sightpress list` shows its comma
    ```
 
 3. Open the link it prints to choose the first admin's password, then sign in at http://localhost:8080/login.
+4. Open http://localhost:8080/ to see the public site. Every new site starts with six published pages (Home, About,
+   Contact with a contact form, Privacy, Terms and an Accessibility statement), main and footer menus, and icons and
+   a share image made from its name, all in the default theme. Outside production (`APP_ENV`), every page asks
+   search engines not to index it.
 
 ## Development
 

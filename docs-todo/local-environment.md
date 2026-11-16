@@ -22,7 +22,7 @@ Developers and operators trying SightPress or working on it. No SightPress permi
 | `docker compose down` / `make down`         | Stop everything                                                |
 | `composer up` / `composer down`             | The same through Composer                                      |
 | `bin/sightpress list`                       | List the command line commands                                 |
-| `bin/sightpress site:create demo`           | Create a site (not available yet: prints a message, exit 1)   |
+| `bin/sightpress site:create demo`           | Create a site with starter pages, menus and icons (asks for the rest) |
 | `make site-create NAME=demo`                | The same inside the PHP container                              |
 | `make check`                                | Run `composer check` inside the PHP container                  |
 
