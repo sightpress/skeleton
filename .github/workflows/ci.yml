@@ -22,8 +22,8 @@ jobs:
       run:
         working-directory: skeleton
     steps:
-      # Composer finds core and module-interface through the path repositories ../core and ../module-interface,
-      # so the three repos are checked out side by side.
+      # core and module-interface come from their main branches, checked out next to this repo and added to Composer
+      # as path repositories below (users of the skeleton get them from Packagist).
       - uses: actions/checkout@v7
         with:
           path: skeleton
@@ -55,6 +55,11 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: composer-${{ runner.os }}-${{ hashFiles('skeleton/composer.json') }}
           restore-keys: composer-${{ runner.os }}-
+
+      - name: Use the core and module-interface checkouts
+        run: |
+          composer config --global repositories.sightpress-core '{"type": "path", "url": "${{ github.workspace }}/core", "options": {"symlink": true}}'
+          composer config --global repositories.sightpress-module-interface '{"type": "path", "url": "${{ github.workspace }}/module-interface", "options": {"symlink": true}}'
 
       - name: Validate composer.json
         run: composer validate --strict --no-check-lock

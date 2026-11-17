@@ -9,25 +9,9 @@
     "issues": "https://github.com/sightpress/skeleton/issues",
     "source": "https://github.com/sightpress/skeleton"
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../core",
-      "options": {
-        "symlink": true
-      }
-    },
-    {
-      "type": "path",
-      "url": "../module-interface",
-      "options": {
-        "symlink": true
-      }
-    }
-  ],
   "require": {
     "php": ">=8.5",
-    "sightpress/core": "^0.1@dev"
+    "sightpress/core": "~0.1.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3",

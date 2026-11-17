@@ -24,9 +24,6 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - .:/app
-      # Path repositories (see composer.json): Composer links vendor/sightpress/* to these sibling folders.
-      - ../core:/core:ro
-      - ../module-interface:/module-interface:ro
     depends_on:
       mailpit:
         condition: service_started

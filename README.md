@@ -14,10 +14,9 @@ This project holds your configuration and the files that start the app. All feat
 
 ## Local environment
 
-Clone `core` and `module-interface` next to this repo (the PHP container and Composer find them at `../core` and
-`../module-interface`), then:
-
 ```sh
+composer create-project sightpress/skeleton my-site
+cd my-site
 cp .env.example .env   # optional: every setting has a default
 docker compose up
 ```
@@ -59,16 +58,14 @@ The command line tool is `bin/sightpress` (`bin/sightpress list` shows its comma
      --db=sqlite:////app/sites/demo.sqlite --url=http://localhost:8080
    ```
 
-3. Open the link it prints to choose the first admin's password, then sign in at http://localhost:8080/login.
+3. It prints a one-time setup code and the page to type it on. Go there, enter the code and choose the first
+   admin's password, then sign in at http://localhost:8080/login.
 4. Open http://localhost:8080/ to see the public site. Every new site starts with six published pages (Home, About,
    Contact with a contact form, Privacy, Terms and an Accessibility statement), main and footer menus, and icons and
    a share image made from its name, all in the default theme. Outside production (`APP_ENV`), every page asks
    search engines not to index it.
 
 ## Development
-
-Clone `core` and `module-interface` next to this repo (Composer finds them at `../core` and `../module-interface`),
-then:
 
 ```sh
 composer install
@@ -95,13 +92,30 @@ docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$PWD/..:/workspace" 
   sightpress/dev-php:8.5 composer check
 ```
 
-The parent folder is mounted so that the sibling repos are visible inside the container.
+### Working on SightPress itself
+
+To change `core` or `module-interface` and see the result here, clone them next to this repo
+(`../core`, `../module-interface`) and use those checkouts instead of the packages from Packagist:
+
+- With Docker: uncomment `COMPOSE_FILE` in `.env`. `docker-compose.siblings.yml` mounts the two folders in the PHP
+  container, and its entrypoint adds them to Composer as path repositories. Delete `vendor/` once so that the next
+  start installs again.
+- Without Docker: add them to your global Composer configuration, then run `composer update` in this folder (the
+  paths are relative to it):
+
+  ```sh
+  composer config --global repositories.sightpress-core '{"type": "path", "url": "../core", "options": {"symlink": true}}'
+  composer config --global repositories.sightpress-module-interface '{"type": "path", "url": "../module-interface", "options": {"symlink": true}}'
+  ```
+
+  `composer config --global --unset repositories.sightpress-core` (and `…-module-interface`) undoes it.
+- `make check` runs the checks in the PHP container, so it uses the checkouts too when `COMPOSE_FILE` is set.
 
 ### Continuous integration
 
-Every pull request and every push to `main` runs the `CI` workflow (`composer check`), with `core` and
-`module-interface` checked out next to this repo: `composer validate`, code style, PHPStan, the unit suite with the
-100% coverage gate, the integration suite and `composer audit`. The coverage report is uploaded as an artifact.
+Every pull request and every push to `main` runs the `CI` workflow (`composer check`), with the `main` branches of
+`core` and `module-interface` checked out next to this repo and used as path repositories: `composer validate`, code
+style, PHPStan, the unit suite with the 100% coverage gate, the integration suite and `composer audit`. The coverage report is uploaded as an artifact.
 
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/); release-please uses them to
 keep a release pull request and `CHANGELOG.md` up to date.

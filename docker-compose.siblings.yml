@@ -1,0 +1,12 @@
+# For working on SightPress itself, with `core` and `module-interface` cloned next to this project. Add it with
+#
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.siblings.yml   (in .env)
+#
+# and the PHP container uses those checkouts instead of the packages from Packagist (see docker/php/entrypoint.sh).
+# Delete vendor/ after switching it on or off, so that the next start installs again.
+
+services:
+  php:
+    volumes:
+      - ../core:/core:ro
+      - ../module-interface:/module-interface:ro
