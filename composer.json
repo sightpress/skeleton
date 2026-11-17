@@ -3,7 +3,13 @@
   "description": "Start a new SightPress project: a powerful multi-site, multilingual CMS for everyone, designed with blind and low-vision creators and audiences in mind. Built on modern, object-oriented PHP.",
   "type": "project",
   "license": "GPL-3.0-or-later",
-  "keywords": ["cms", "accessibility", "a11y", "wcag", "skeleton"],
+  "keywords": [
+    "cms",
+    "accessibility",
+    "a11y",
+    "wcag",
+    "skeleton"
+  ],
   "homepage": "https://sightpress.org",
   "support": {
     "issues": "https://github.com/sightpress/skeleton/issues",
