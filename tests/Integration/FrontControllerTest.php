@@ -37,7 +37,8 @@ final class FrontControllerTest extends TestCase
             self::assertSame(404, $status, $path);
             self::assertContains('content-type: text/html; charset=utf-8', $headers, $path);
             self::assertNotContains('x-robots-tag: noindex, nofollow', $headers, $path);
-            self::assertStringContainsString('<html lang="en-GB">', $body, $path);
+            // Core 0.2 adds the text direction (`dir`); 0.1 had only the language.
+            self::assertMatchesRegularExpression('~<html lang="en-GB"(?: dir="ltr")?>~', $body, $path);
             self::assertStringContainsString('<h1>No site configured</h1>', $body, $path);
         }
     }
