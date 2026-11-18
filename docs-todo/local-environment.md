@@ -2,8 +2,9 @@
 
 ## What it does
 
-Runs a SightPress project on your own computer with Docker. One command starts the web server, PHP, an e-mail
-catcher (Mailpit) and S3-compatible file storage (MinIO). A database server is optional: SightPress uses SQLite
+Runs a SightPress project on your own computer with Docker. One command starts the web server, PHP, the scheduler
+(which runs `bin/sightpress schedule:run` once a minute), an e-mail catcher (Mailpit) and S3-compatible file storage
+(MinIO). A database server is optional: SightPress uses SQLite
 unless you start MySQL, MariaDB or PostgreSQL with a profile.
 
 Until a site is created, every address shows an accessible "No site configured" page (HTTP 404).
@@ -25,6 +26,7 @@ Developers and operators trying SightPress or working on it. No SightPress permi
 | `bin/sightpress site:create demo`           | Create a site with starter pages, menus and icons (asks for the rest) |
 | `make site-create NAME=demo`                | The same inside the PHP container                              |
 | `make check`                                | Run `composer check` inside the PHP container                  |
+| `docker compose logs -f scheduler`          | Watch the scheduled jobs (pages published on schedule …)       |
 
 Other addresses: Mailpit http://localhost:8025, MinIO console http://localhost:9001. All ports listen on
 127.0.0.1 only.
@@ -50,4 +52,5 @@ message. Core renders it (see core's kernel and error pages). It follows the sys
 - `public/index.php` (boots core's kernel, which renders the error pages), `tests/Integration/FrontControllerTest.php`
 - `bin/sightpress`, `src/Console/Application.php`, `tests/Unit/Console/ApplicationTest.php`,
   `tests/Integration/CommandLineTest.php`
+- The `scheduler` service in `docker-compose.yml` (see `docs-todo/scheduler.md`)
 - `docker-compose.yml`, `docker/php/Dockerfile`, `docker/nginx/default.conf`, `Makefile`, `.env.example`

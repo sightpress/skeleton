@@ -10,3 +10,7 @@ services:
     volumes:
       - ../core:/core:ro
       - ../module-interface:/module-interface:ro
+  scheduler:
+    volumes:
+      - ../core:/core:ro
+      - ../module-interface:/module-interface:ro

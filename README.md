@@ -27,6 +27,8 @@ The first start builds the PHP image and runs `composer install` if `vendor/` is
 What runs:
 
 - `nginx` on <http://localhost:8080> and `php` (PHP-FPM 8.5 with PCOV and Composer)
+- `scheduler`, which runs `bin/sightpress schedule:run` once a minute (scheduled publishing and other jobs at a set
+  time); on a server, use one crontab line instead (see `docs-todo/scheduler.md`)
 - `mailpit`, which catches every e-mail: <http://localhost:8025>
 - `minio`, S3-compatible file storage: console on <http://localhost:9001> (user and password in `.env`)
 

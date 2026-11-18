@@ -1,6 +1,6 @@
 # Local environment for a SightPress project.
 #
-#   docker compose up                      app on http://localhost:8080, plus Mailpit and MinIO
+#   docker compose up                      app on http://localhost:8080, plus the scheduler, Mailpit and MinIO
 #   docker compose --profile mysql up      also start MySQL   (or: mariadb, postgres)
 #
 # A plain `docker compose up` starts no database: the site registry is a config file (config/sites.php), and
@@ -28,6 +28,33 @@ services:
       mailpit:
         condition: service_started
       minio:
+        condition: service_started
+
+  # Runs `bin/sightpress schedule:run` once a minute: scheduled publishing and the jobs of other modules, for every
+  # site. It waits for the php service to install the dependencies, and never runs two at once (core keeps a lock).
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: dev
+    <<: *env-file
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - .:/app
+    entrypoint: ["docker-php-entrypoint"]
+    command:
+      - sh
+      - -c
+      - |
+        until [ -f vendor/autoload.php ]; do sleep 5; done
+        while true; do
+          php bin/sightpress schedule:run --no-interaction || true
+          sleep 60
+        done
+    depends_on:
+      php:
         condition: service_started
 
   nginx:
