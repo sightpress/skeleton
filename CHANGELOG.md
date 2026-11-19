@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.0](https://github.com/sightpress/skeleton/compare/0.1.0...0.2.0) (2026-11-19)
+
+
+### Features
+
+* run the scheduled jobs once a minute with a scheduler service, and document the crontab line for servers (P-3) ([#15](https://github.com/sightpress/skeleton/issues/15)) ([ba2b8ee](https://github.com/sightpress/skeleton/commit/ba2b8ee35ed81d06afe138ef6f8730fe15929f82))
+
+
+### Documentation
+
+* add a code of conduct and a contributing guide ([#20](https://github.com/sightpress/skeleton/issues/20)) ([738c014](https://github.com/sightpress/skeleton/commit/738c014cc3014deae3b0d7ad6957bb4b440e460b))
+* show the modules defaults and locks in config/tenant.php (F-2) ([#18](https://github.com/sightpress/skeleton/issues/18)) ([57003ea](https://github.com/sightpress/skeleton/commit/57003ea0624fb247b4e16acf2ec1ef79c7a4e17d))
+
 ## 0.1.0 (2026-11-17)
 
 
