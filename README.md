@@ -125,6 +125,11 @@ keep a release pull request and `CHANGELOG.md` up to date.
 `main` is protected by the ruleset in `.github/rulesets/main.json`. Changes reach it only through a pull request that
 passes the `composer check` check and has one approval. Pull requests are squash-merged. Admins can bypass the ruleset.
 
+## Contributing
+
+Everyone can help, not only developers. See [CONTRIBUTING.md](CONTRIBUTING.md) for the ways to take part, and
+the [Code of Conduct](CODE_OF_CONDUCT.md) that everyone who takes part agrees to follow.
+
 ## Licence
 
 GNU General Public License v3.0 or later. See [LICENSE](LICENSE).
