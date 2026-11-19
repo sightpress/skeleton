@@ -23,4 +23,13 @@ return [
         'default_locale' => 'en-GB',
     ],
     'timezone' => 'UTC',
+    // Optional modules ("features"). Each site's admins turn them on or off on the Features screen, or with
+    // `bin/sightpress site:module:enable|disable`. `defaults` replaces a module's own default for new sites (existing
+    // sites keep their choice); `locked` turns a module on (true) or off (false) for every site, and the sites' admins
+    // see "Set by your organisation". Unknown module ids stop SightPress from starting. For example:
+    // 'modules' => ['defaults' => ['analytics' => false], 'locked' => ['assistant' => false]],
+    'modules' => [
+        'defaults' => [],
+        'locked' => [],
+    ],
 ];
