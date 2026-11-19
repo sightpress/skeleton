@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/sightpress/skeleton/compare/0.2.0...0.3.0) (2026-11-19)
+
+
+### Bug fixes
+
+* install core 0.3, so a new project gets every M2 feature (Q-5) ([#24](https://github.com/sightpress/skeleton/issues/24)) ([d6e44d7](https://github.com/sightpress/skeleton/commit/d6e44d784476777e0d93baa66a320ce91ec7d785))
+* set PHP's and nginx's upload limits together from .env, and show SightPress's own page when a request is too large (M-5) ([#21](https://github.com/sightpress/skeleton/issues/21)) ([866c783](https://github.com/sightpress/skeleton/commit/866c78363367797b50e2a46f84c6173939203f0a))
+
 ## [0.2.0](https://github.com/sightpress/skeleton/compare/0.1.0...0.2.0) (2026-11-19)
 
 
