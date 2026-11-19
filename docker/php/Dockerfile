@@ -2,7 +2,8 @@
 #
 #   base: PHP 8.5 FPM with the extensions SightPress needs (intl for dates and numbers in the visitor's language,
 #         PDO for SQLite, MySQL/MariaDB and PostgreSQL, gd with JPEG/PNG/WebP/FreeType and exif for uploaded
-#         pictures).
+#         pictures), and the recommended upload and input limits. `sightpress-php-limits` replaces them with the
+#         values from .env (docker/limits.sh) in a file PHP_INI_SCAN_DIR points to.
 #   dev:  base + PCOV for code coverage + Composer. docker-compose.yml uses this target.
 FROM php:8.5-fpm AS base
 
@@ -16,7 +17,18 @@ RUN apt-get update \
 RUN { \
         echo 'date.timezone=UTC'; \
         echo 'expose_php=Off'; \
-    } > /usr/local/etc/php/conf.d/sightpress.ini
+    } > /usr/local/etc/php/conf.d/sightpress.ini \
+    && { \
+        echo 'upload_max_filesize=64M'; \
+        echo 'post_max_size=65M'; \
+        echo 'max_input_vars=5000'; \
+        echo 'max_file_uploads=20'; \
+        echo 'memory_limit=256M'; \
+        echo 'max_input_time=300'; \
+    } > /usr/local/etc/php/conf.d/sightpress-limits.ini
+
+COPY docker/limits.sh /usr/local/bin/sightpress-limits
+COPY docker/php/limits.sh /usr/local/bin/sightpress-php-limits
 
 WORKDIR /app
 
@@ -33,7 +45,6 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY docker/php/entrypoint.sh /usr/local/bin/sightpress-entrypoint
 
 RUN { \
-        echo 'memory_limit=512M'; \
         echo 'pcov.enabled=1'; \
     } > /usr/local/etc/php/conf.d/sightpress-dev.ini
 

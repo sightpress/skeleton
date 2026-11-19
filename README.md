@@ -41,6 +41,12 @@ docker compose --profile mysql up      # or: mariadb, postgres
 Database containers are only reachable from the other containers, by service name (`mysql`, `mariadb`, `postgres`).
 All ports listen on 127.0.0.1 only; change them in `.env` if they are taken.
 
+Upload and input limits (largest file, largest form, form fields, memory, timeout) are one block in `.env`
+(`UPLOAD_MAX_SIZE`, `INPUT_MAX_SIZE`, `INPUT_MAX_VARS`, `MAX_FILE_UPLOADS`, `PHP_MEMORY_LIMIT`, `UPLOAD_TIMEOUT`).
+PHP and nginx both read them when they start (`docker/limits.sh`), so they always agree. The defaults are the
+recommended *standard* values (64 MB files). After changing them, restart (`docker compose up -d`) and check with
+`docker compose exec php bin/sightpress system:check`.
+
 Shortcuts (`make help` lists them):
 
 - `make up` (add `PROFILE=mysql`, `mariadb` or `postgres`) and `make down`; or `composer up` and `composer down`

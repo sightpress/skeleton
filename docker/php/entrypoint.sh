@@ -1,6 +1,11 @@
 #!/bin/sh
-# Installs the Composer dependencies on the first start, then runs the given command (php-fpm by default).
+# Sets PHP's upload and input limits from .env, installs the Composer dependencies on the first start, then runs the
+# given command (php-fpm by default).
 set -e
+
+# Upload and input limits (docker/limits.sh): written where PHP_INI_SCAN_DIR looks, so php-fpm and every command
+# run in this container (`docker compose exec php bin/sightpress …`) use them.
+sightpress-php-limits
 
 # Working on SightPress itself: docker-compose.siblings.yml mounts the core and module-interface checkouts at /core
 # and /module-interface. Composer then takes them from there instead of Packagist.

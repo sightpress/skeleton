@@ -5,7 +5,7 @@
 #
 # A plain `docker compose up` starts no database: the site registry is a config file (config/sites.php), and
 # sites can use SQLite or an external database server. Settings come from `.env` (copy `.env.example`); every
-# one has a default.
+# one has a default. The upload and input limits in `.env` set PHP and nginx together (docker/limits.sh).
 
 x-env-file: &env-file
   env_file:
@@ -21,6 +21,7 @@ services:
     <<: *env-file
     environment:
       APP_ENV: ${APP_ENV:-dev}
+      PHP_INI_SCAN_DIR: /usr/local/etc/php/conf.d:/tmp/sightpress-php
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - .:/app
@@ -40,6 +41,7 @@ services:
     <<: *env-file
     environment:
       APP_ENV: ${APP_ENV:-dev}
+      PHP_INI_SCAN_DIR: /usr/local/etc/php/conf.d:/tmp/sightpress-php
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - .:/app
@@ -48,6 +50,7 @@ services:
       - sh
       - -c
       - |
+        sightpress-php-limits
         until [ -f vendor/autoload.php ]; do sleep 5; done
         while true; do
           php bin/sightpress schedule:run --no-interaction || true
@@ -57,13 +60,17 @@ services:
       php:
         condition: service_started
 
+  # Its entrypoint reads the upload limits from .env (docker/limits.sh) and fills them into the server config
+  # (docker/nginx/default.conf.template).
   nginx:
     image: nginx:1.29-alpine
+    <<: *env-file
     ports:
       - "127.0.0.1:${HTTP_PORT:-8080}:80"
     volumes:
       - ./public:/app/public:ro
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./docker/limits.sh:/docker-entrypoint.d/10-sightpress-limits.envsh:ro
     depends_on:
       php:
         condition: service_started

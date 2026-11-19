@@ -14,6 +14,19 @@ declare(strict_types=1);
 
 $projectDir = dirname(__DIR__);
 
+// The web server's request body limit, which PHP can't read. In the docker compose setup nginx gets it from the same
+// .env values as PHP (docker/limits.sh): the larger of UPLOAD_MAX_SIZE + 1M and INPUT_MAX_SIZE. Elsewhere, write
+// your web server's limit instead, for example '65M' (nginx client_max_body_size, Apache LimitRequestBody).
+$megabytes = static function (string $name, int $default): int {
+    $value = getenv($name);
+    if (!is_string($value) || preg_match('/^(\d+)([MmGg])$/', $value, $size) !== 1) {
+        return $default;
+    }
+
+    return strtoupper($size[2]) === 'G' ? (int) $size[1] * 1024 : (int) $size[1];
+};
+$bodyLimit = max($megabytes('UPLOAD_MAX_SIZE', 64) + 1, $megabytes('INPUT_MAX_SIZE', 8)) . 'M';
+
 return [
     'registry' => [
         'path' => $projectDir . '/config/sites.php',
@@ -31,5 +44,9 @@ return [
     'modules' => [
         'defaults' => [],
         'locked' => [],
+    ],
+    // Uploads: `bin/sightpress system:check` compares this with PHP's limits and the site's (see .env.example).
+    'uploads' => [
+        'proxy_body_limit' => $bodyLimit,
     ],
 ];
