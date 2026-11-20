@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/sightpress/skeleton/compare/0.3.0...0.4.0) (2026-11-20)
+
+
+### Features
+
+* add the themes section to config/tenant.php (T-1) ([#26](https://github.com/sightpress/skeleton/issues/26)) ([fd7b962](https://github.com/sightpress/skeleton/commit/fd7b962b2856d387048cba61159aac5717ef7db7))
+* publish the installed themes' preview pages after composer install and update, for the admin theme picker (T-2) ([#28](https://github.com/sightpress/skeleton/issues/28)) ([e79fab8](https://github.com/sightpress/skeleton/commit/e79fab83204de2dcdd3bb37937fb095fde1e4bf2))
+
 ## [0.3.0](https://github.com/sightpress/skeleton/compare/0.2.0...0.3.0) (2026-11-19)
 
 
