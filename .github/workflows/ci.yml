@@ -22,8 +22,8 @@ jobs:
       run:
         working-directory: skeleton
     steps:
-      # core and module-interface come from their main branches, checked out next to this repo and added to Composer
-      # as path repositories below (users of the skeleton get them from Packagist).
+      # core, module-interface, theme-interface and theme-default come from their main branches, checked out next to
+      # this repo and added to Composer as path repositories below (users of the skeleton get them from Packagist).
       - uses: actions/checkout@v7
         with:
           path: skeleton
@@ -37,6 +37,16 @@ jobs:
         with:
           repository: sightpress/module-interface
           path: module-interface
+
+      - uses: actions/checkout@v7
+        with:
+          repository: sightpress/theme-interface
+          path: theme-interface
+
+      - uses: actions/checkout@v7
+        with:
+          repository: sightpress/theme-default
+          path: theme-default
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -56,10 +66,11 @@ jobs:
           key: composer-${{ runner.os }}-${{ hashFiles('skeleton/composer.json') }}
           restore-keys: composer-${{ runner.os }}-
 
-      - name: Use the core and module-interface checkouts
+      - name: Use the core, module-interface, theme-interface and theme-default checkouts
         run: |
-          composer config --global repositories.sightpress-core '{"type": "path", "url": "${{ github.workspace }}/core", "options": {"symlink": true}}'
-          composer config --global repositories.sightpress-module-interface '{"type": "path", "url": "${{ github.workspace }}/module-interface", "options": {"symlink": true}}'
+          for package in core module-interface theme-interface theme-default; do
+            composer config --global "repositories.sightpress-$package" "{\"type\": \"path\", \"url\": \"${{ github.workspace }}/$package\", \"options\": {\"symlink\": true}}"
+          done
 
       - name: Validate composer.json
         run: composer validate --strict --no-check-lock

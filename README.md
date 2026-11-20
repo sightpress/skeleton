@@ -102,10 +102,11 @@ docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$PWD/..:/workspace" 
 
 ### Working on SightPress itself
 
-To change `core` or `module-interface` and see the result here, clone them next to this repo
-(`../core`, `../module-interface`) and use those checkouts instead of the packages from Packagist:
+To change `core`, `module-interface`, `theme-interface` or `theme-default` and see the result here, clone them next
+to this repo (`../core`, `../module-interface`, `../theme-interface`, `../theme-default`) and use those checkouts
+instead of the packages from Packagist:
 
-- With Docker: uncomment `COMPOSE_FILE` in `.env`. `docker-compose.siblings.yml` mounts the two folders in the PHP
+- With Docker: uncomment `COMPOSE_FILE` in `.env`. `docker-compose.siblings.yml` mounts the four folders in the PHP
   container, and its entrypoint adds them to Composer as path repositories. Delete `vendor/` once so that the next
   start installs again.
 - Without Docker: add them to your global Composer configuration, then run `composer update` in this folder (the
@@ -114,15 +115,18 @@ To change `core` or `module-interface` and see the result here, clone them next 
   ```sh
   composer config --global repositories.sightpress-core '{"type": "path", "url": "../core", "options": {"symlink": true}}'
   composer config --global repositories.sightpress-module-interface '{"type": "path", "url": "../module-interface", "options": {"symlink": true}}'
+  composer config --global repositories.sightpress-theme-interface '{"type": "path", "url": "../theme-interface", "options": {"symlink": true}}'
+  composer config --global repositories.sightpress-theme-default '{"type": "path", "url": "../theme-default", "options": {"symlink": true}}'
   ```
 
-  `composer config --global --unset repositories.sightpress-core` (and `…-module-interface`) undoes it.
+  `composer config --global --unset repositories.sightpress-core` (and `…-module-interface`, `…-theme-interface`,
+  `…-theme-default`) undoes it.
 - `make check` runs the checks in the PHP container, so it uses the checkouts too when `COMPOSE_FILE` is set.
 
 ### Continuous integration
 
 Every pull request and every push to `main` runs the `CI` workflow (`composer check`), with the `main` branches of
-`core` and `module-interface` checked out next to this repo and used as path repositories: `composer validate`, code
+`core`, `module-interface`, `theme-interface` and `theme-default` checked out next to this repo and used as path repositories: `composer validate`, code
 style, PHPStan, the unit suite with the 100% coverage gate, the integration suite and `composer audit`. The coverage report is uploaded as an artifact.
 
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/); release-please uses them to

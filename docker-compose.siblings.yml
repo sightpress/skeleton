@@ -1,4 +1,5 @@
-# For working on SightPress itself, with `core` and `module-interface` cloned next to this project. Add it with
+# For working on SightPress itself, with `core`, `module-interface`, `theme-interface` and `theme-default` cloned next
+# to this project. Add it with
 #
 #   COMPOSE_FILE=docker-compose.yml:docker-compose.siblings.yml   (in .env)
 #
@@ -10,7 +11,11 @@ services:
     volumes:
       - ../core:/core:ro
       - ../module-interface:/module-interface:ro
+      - ../theme-interface:/theme-interface:ro
+      - ../theme-default:/theme-default:ro
   scheduler:
     volumes:
       - ../core:/core:ro
       - ../module-interface:/module-interface:ro
+      - ../theme-interface:/theme-interface:ro
+      - ../theme-default:/theme-default:ro

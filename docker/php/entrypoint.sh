@@ -7,9 +7,10 @@ set -e
 # run in this container (`docker compose exec php bin/sightpress …`) use them.
 sightpress-php-limits
 
-# Working on SightPress itself: docker-compose.siblings.yml mounts the core and module-interface checkouts at /core
-# and /module-interface. Composer then takes them from there instead of Packagist.
-for package in core module-interface; do
+# Working on SightPress itself: docker-compose.siblings.yml mounts the core, module-interface, theme-interface and
+# theme-default checkouts at /core, /module-interface, /theme-interface and /theme-default. Composer then takes them
+# from there instead of Packagist.
+for package in core module-interface theme-interface theme-default; do
     if [ -f "/$package/composer.json" ]; then
         composer config --global "repositories.sightpress-$package" \
             "{\"type\": \"path\", \"url\": \"/$package\", \"options\": {\"symlink\": true}}"
