@@ -40,3 +40,6 @@ Thumbs.db
 /sites/*.sqlite-*
 # Each site's files (media, avatars, branding) in a folder named after the site id
 /sites/*/
+
+# Theme previews written by `bin/sightpress theme:publish-assets` (after composer install/update)
+/public/themes/

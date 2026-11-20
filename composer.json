@@ -68,7 +68,14 @@
     ],
     "up": "docker compose up --detach --wait",
     "down": "docker compose down",
-    "site:create": "@php bin/sightpress site:create"
+    "site:create": "@php bin/sightpress site:create",
+    "publish-themes": "php bin/sightpress theme:publish-assets --no-interaction || echo \"The theme previews were not published: run bin/sightpress theme:publish-assets.\"",
+    "post-install-cmd": [
+      "@publish-themes"
+    ],
+    "post-update-cmd": [
+      "@publish-themes"
+    ]
   },
   "scripts-descriptions": {
     "cs-check": "Check the code style (PSR-12) without changing files.",
@@ -83,6 +90,7 @@
     "fix": "Apply Rector refactorings, then fix the code style.",
     "up": "Start the local environment (http://localhost:8080) in the background.",
     "down": "Stop the local environment.",
-    "site:create": "Create a site, for example `composer site:create demo` (asks for the rest)."
+    "site:create": "Create a site, for example `composer site:create demo` (asks for the rest).",
+    "publish-themes": "Write the preview page (and screenshots, where Chromium is installed) of every installed theme to public/themes/, for the admin theme picker."
   }
 }
