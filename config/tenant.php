@@ -45,6 +45,15 @@ return [
         'defaults' => [],
         'locked' => [],
     ],
+    // Themes installed with Composer (`composer require vendor/some-theme`, then `bin/sightpress cache:clear`).
+    // `allowed` lists the theme ids sites may use (null = every installed theme); `default` is the theme of new sites
+    // and must be allowed. `bin/sightpress theme:list` shows them and the sites that use each; a site's admins choose
+    // its theme, or `bin/sightpress site:theme:apply <site> <theme>`. For example:
+    // 'themes' => ['allowed' => ['default', 'acme-harbour'], 'default' => 'acme-harbour'],
+    'themes' => [
+        'allowed' => null,
+        'default' => 'default',
+    ],
     // Uploads: `bin/sightpress system:check` compares this with PHP's limits and the site's (see .env.example).
     'uploads' => [
         'proxy_body_limit' => $bodyLimit,
