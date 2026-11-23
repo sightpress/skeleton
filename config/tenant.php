@@ -58,4 +58,10 @@ return [
     'uploads' => [
         'proxy_body_limit' => $bodyLimit,
     ],
+    // The largest file of each kind for every site, and under `max` the most a site's own limit can be
+    // (`bin/sightpress site:media:limits <site> --audio=500M`). Without `max`, a site can only go lower. For example:
+    // 'media' => ['limits' => ['image' => '20M', 'document' => '50M', 'max' => ['audio' => '500M', 'video' => '2G']]],
+    'media' => [
+        'limits' => [],
+    ],
 ];
