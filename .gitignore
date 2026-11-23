@@ -19,6 +19,7 @@ junit.xml
 .php-cs-fixer.cache
 /var/cache/
 /var/log/
+/var/uploads/
 /.rector-cache/
 
 # Private planning (never committed)

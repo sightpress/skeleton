@@ -55,8 +55,12 @@ return [
         'default' => 'default',
     ],
     // Uploads: `bin/sightpress system:check` compares this with PHP's limits and the site's (see .env.example).
+    // Large files wait in `temp_path` while their parts arrive (never under public/; several web servers must share
+    // it), up to `max_chunked_bytes`. Uncomment to change them:
     'uploads' => [
         'proxy_body_limit' => $bodyLimit,
+        // 'temp_path' => 'var/uploads',
+        // 'max_chunked_bytes' => '5G',
     ],
     // The largest file of each kind for every site, and under `max` the most a site's own limit can be
     // (`bin/sightpress site:media:limits <site> --audio=500M`). Without `max`, a site can only go lower. For example:
