@@ -68,4 +68,16 @@ return [
     'media' => [
         'limits' => [],
     ],
+    // Keep every site on your organisation's domain and every account on its email addresses ('any' = no limit).
+    // `domain_policy`: sites must use example.org or a name under it. `email_policy`: only addresses at exactly these
+    // domains can be invited, sign up or change to a new address. `domain_registration`: on members-only sites,
+    // people at these domains ('on' = those of email_policy, or ['domains' => [...]] among them) may make their own
+    // account even when the site's sign-up is off; each site can turn it off. Making a policy stricter removes
+    // nothing: `bin/sightpress system:check` lists what is outside it. For example:
+    // 'domain_policy' => ['subdomain_of' => 'example.org'],
+    // 'email_policy' => ['domains' => ['example.org']],
+    // 'domain_registration' => 'on',
+    'domain_policy' => 'any',
+    'email_policy' => 'any',
+    'domain_registration' => 'off',
 ];
