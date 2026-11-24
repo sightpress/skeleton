@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.0](https://github.com/sightpress/skeleton/compare/0.3.0...0.4.0) (2026-11-24)
+
+
+### Features
+
+* add the settings for large uploads sent in parts, and keep waiting files out of git (M-7) ([#31](https://github.com/sightpress/skeleton/issues/31)) ([7dcbdad](https://github.com/sightpress/skeleton/commit/7dcbdad30de6427e7cf787e99d025d068f0cfc89))
+* add the themes section to config/tenant.php (T-1) ([#26](https://github.com/sightpress/skeleton/issues/26)) ([fd7b962](https://github.com/sightpress/skeleton/commit/fd7b962b2856d387048cba61159aac5717ef7db7))
+* count uploads the web server refuses, and document per-site upload limits (M-5b) ([#29](https://github.com/sightpress/skeleton/issues/29)) ([7cc937a](https://github.com/sightpress/skeleton/commit/7cc937aebed77384cd7d76b01d3347b29bf8d7d4))
+* include the S3 storage packages and let a CDN serve published theme fonts (M-1, M-2) ([#30](https://github.com/sightpress/skeleton/issues/30)) ([08b91a7](https://github.com/sightpress/skeleton/commit/08b91a73bb11b41f10f8322d977863eb75b43bd2))
+* publish the installed themes' preview pages after composer install and update, for the admin theme picker (T-2) ([#28](https://github.com/sightpress/skeleton/issues/28)) ([e79fab8](https://github.com/sightpress/skeleton/commit/e79fab83204de2dcdd3bb37937fb095fde1e4bf2))
+
+
+### Bug fixes
+
+* install core 0.4, so a new project gets every M3 feature (Q-5) ([#33](https://github.com/sightpress/skeleton/issues/33)) ([627a4aa](https://github.com/sightpress/skeleton/commit/627a4aa3953a01de8ae647dfda6f90e321f4569f))
+
 ## [0.3.0](https://github.com/sightpress/skeleton/compare/0.2.0...0.3.0) (2026-11-19)
 
 
