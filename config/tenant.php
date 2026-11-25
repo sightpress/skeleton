@@ -80,4 +80,17 @@ return [
     'domain_policy' => 'any',
     'email_policy' => 'any',
     'domain_registration' => 'off',
+    // Text messages (SMS): off on every site until you set up a provider (`bin/sightpress site:sms:set <site> …`, key
+    // from standard input) and turn them on (`site:sms:enable <site>`). Or give every site a default provider here,
+    // with its key in the SMS_API_KEY environment variable. The budget is message parts per site and month (0 = no
+    // limit), of which `reserved_for_codes` are kept for security codes; `countries` null = the country of each
+    // site's main language. For example:
+    // 'sms' => ['provider' => 'twilio', 'account' => 'AC…', 'sender' => 'Riverside', 'monthly_budget' => 1000, 'countries' => ['GB', 'IE']],
+    'sms' => [
+        'site_providers' => false,
+        'require_for_existing' => false,
+    ],
+    // Two-step confirmation: a code by text before important changes. 'optional' (each site's admins choose, on
+    // Site settings → Security), 'required' (every site with text messages) or 'off' (no site).
+    'two_step' => 'optional',
 ];
