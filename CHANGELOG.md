@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/sightpress/skeleton/compare/0.4.0...0.5.0) (2026-11-27)
+
+
+### Documentation
+
+* document the sms and two_step tenant settings and SMS_API_KEY (N-2, N-6) ([#36](https://github.com/sightpress/skeleton/issues/36)) ([9e7988f](https://github.com/sightpress/skeleton/commit/9e7988fd73c5bf9919dbc00b6eb615d57f6850ec))
+* show the tenant domain policy, email policy and domain registration settings in config/tenant.php (X-5, X-7) ([#34](https://github.com/sightpress/skeleton/issues/34)) ([4e8301e](https://github.com/sightpress/skeleton/commit/4e8301e5509da1974e46bf7fcbba022c4590e04c))
+
+
+### Miscellaneous
+
+* require core 0.5 ([#38](https://github.com/sightpress/skeleton/issues/38)) ([a733529](https://github.com/sightpress/skeleton/commit/a7335295434ee5d858976f1e0de41171f792d2b8))
+
 ## [0.4.0](https://github.com/sightpress/skeleton/compare/0.3.0...0.4.0) (2026-11-24)
 
 
