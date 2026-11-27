@@ -1,0 +1,20 @@
+# Two PHP servers behind one nginx, with no sticky sessions: nginx sends each request to the next server in turn
+# (`php` resolves to both containers). For checking that sign-ins work whichever server answers; tests/multi-server.sh
+# uses it:
+#
+#   tests/multi-server.sh database      (or: redis)
+#
+# Runs as its own compose project on HTTP_PORT (default 8070), next to the usual local environment.
+
+services:
+  php:
+    scale: 2
+    environment:
+      APP_SECRET: ${APP_SECRET:?set APP_SECRET}
+      SESSION_STORE: ${SESSION_STORE:-database}
+      SESSION_REDIS_DSN: redis://redis:6379
+
+  nginx:
+    # Logs which server answered, so the check can see that both did.
+    volumes:
+      - ./docker/nginx/multi.conf:/etc/nginx/conf.d/multi-log.conf:ro

@@ -41,6 +41,12 @@ docker compose --profile mysql up      # or: mariadb, postgres
 Database containers are only reachable from the other containers, by service name (`mysql`, `mariadb`, `postgres`).
 All ports listen on 127.0.0.1 only; change them in `.env` if they are taken.
 
+Sign-ins (sessions) are kept in each site's database (`session.store` in `config/tenant.php`), so several web servers
+can share them. To keep them in Redis, start it with `docker compose --profile redis up`, and set
+`SESSION_STORE=redis` and `SESSION_REDIS_DSN=redis://redis:6379` in `.env`. `tests/multi-server.sh database` (or
+`redis`) checks that signing in works behind two PHP servers with no sticky sessions (`docker-compose.multi.yml`, port
+8070); it removes everything it made.
+
 Upload and input limits (largest file, largest form, form fields, memory, timeout) are one block in `.env`
 (`UPLOAD_MAX_SIZE`, `INPUT_MAX_SIZE`, `INPUT_MAX_VARS`, `MAX_FILE_UPLOADS`, `PHP_MEMORY_LIMIT`, `UPLOAD_TIMEOUT`).
 PHP and nginx both read them when they start (`docker/limits.sh`), so they always agree. The defaults are the

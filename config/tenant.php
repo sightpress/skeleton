@@ -36,6 +36,15 @@ return [
         'default_locale' => 'en-GB',
     ],
     'timezone' => 'UTC',
+    // Sign-ins (sessions): where they are kept. 'database' (each site's own database, so any number of web servers
+    // share them), 'redis' (needs PHP's redis extension and SESSION_REDIS_DSN, for example redis://redis:6379),
+    // 'files' (in `path`, one web server only) or a class of yours implementing SightPress\Core\Http\Session\SessionStore.
+    // Changing it signs everyone out once. `idle_timeout`: seconds without a request before someone is signed out.
+    // `bin/sightpress system:check` says where they are kept and whether Redis answers.
+    'session' => [
+        'store' => is_string(getenv('SESSION_STORE')) && getenv('SESSION_STORE') !== '' ? getenv('SESSION_STORE') : 'database',
+        'idle_timeout' => 7200,
+    ],
     // Optional modules ("features"). Each site's admins turn them on or off on the Features screen, or with
     // `bin/sightpress site:module:enable|disable`. `defaults` replaces a module's own default for new sites (existing
     // sites keep their choice); `locked` turns a module on (true) or off (false) for every site, and the sites' admins

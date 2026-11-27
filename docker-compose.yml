@@ -2,6 +2,7 @@
 #
 #   docker compose up                      app on http://localhost:8080, plus the scheduler, Mailpit and MinIO
 #   docker compose --profile mysql up      also start MySQL   (or: mariadb, postgres)
+#   docker compose --profile redis up      also start Redis, to keep sign-ins there (session.store = redis)
 #
 # A plain `docker compose up` starts no database: the site registry is a config file (config/sites.php), and
 # sites can use SQLite or an external database server. Settings come from `.env` (copy `.env.example`); every
@@ -145,6 +146,18 @@ services:
       interval: 5s
       timeout: 5s
       retries: 30
+
+  # Optional: keeps sign-ins (sessions) when `session.store` is `redis` in config/tenant.php, with
+  # SESSION_REDIS_DSN=redis://redis:6379 in .env. Start it with `--profile redis`. Sessions only, so nothing is saved.
+  redis:
+    profiles: ["redis"]
+    image: redis:8-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
 volumes:
   minio-data:
