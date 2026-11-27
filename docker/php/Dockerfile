@@ -4,7 +4,8 @@
 #         PDO for SQLite, MySQL/MariaDB and PostgreSQL, gd with JPEG/PNG/WebP/FreeType and exif for uploaded
 #         pictures), and the recommended upload and input limits. `sightpress-php-limits` replaces them with the
 #         values from .env (docker/limits.sh) in a file PHP_INI_SCAN_DIR points to.
-#   dev:  base + PCOV for code coverage + Composer. docker-compose.yml uses this target.
+#   dev:  base + PCOV for code coverage + PHP's redis extension (for `session.store` = `redis`) + Composer.
+#         docker-compose.yml uses this target.
 FROM php:8.5-fpm AS base
 
 RUN apt-get update \
@@ -36,8 +37,8 @@ FROM base AS dev
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git unzip $PHPIZE_DEPS \
-    && pecl install pcov \
-    && docker-php-ext-enable pcov \
+    && pecl install pcov redis \
+    && docker-php-ext-enable pcov redis \
     && apt-get purge -y --auto-remove $PHPIZE_DEPS \
     && rm -rf /var/lib/apt/lists/* /tmp/pear
 
